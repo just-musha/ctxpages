@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Услуги</title>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #234046;
+      --lilac: #9B9ABC;
+      --black: #292A25;
+      --light: #FEFFFA;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--light);
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(35, 64, 70, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(35, 64, 70, 0.14);
+    }
+
+    .card-header {
+      padding: 20px 20px 20px;
+      background: var(--green);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 195px; /* увеличено, чтобы кнопка была ниже */
+    }
+
+    .header-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .for-who {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+	
+	.cta-btn {
+	  margin-top: 20px;
+	  width: 100%;
+	  padding: 14px 20px;
+	  background: var(--lilac);        /* Сиреневый #9B9ABC */
+	  color: white;
+	  border: none;
+	  border-radius: 12px;
+	  font-family: 'Work Sans', sans-serif;
+	  font-weight: 600;
+	  font-size: 1rem;
+	  cursor: pointer;
+	  transition: all 0.2s ease;
+	}
+
+	.cta-btn:hover {
+	  background: #8a8aa8;            /* Тёмный оттенок сиреневого */
+	  transform: translateY(-2px);
+	}
+
+    .toggle-btn {
+      margin-top: auto;
+      margin-bottom: 4px; /* дополнительный отступ снизу */
+      background: rgba(255,255,255,0.25);
+      color: white;
+      border: none;
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    .card.expanded .toggle-btn {
+      background: rgba(255,255,255,0.35);
+    }
+
+    .card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 20px;
+      background: white;
+    }
+
+    .card.expanded .card-body {
+      max-height: 480px;
+      padding: 18px 20px 22px;
+    }
+
+    .info-row {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: var(--black);
+      font-weight: 500;
+    }
+
+    .value {
+      color: var(--green);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .note {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: #555;
+      font-style: italic;
+	
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="grid" id="services"></div>
+  </div>
+
+  <script>
+    const services = [
+      {
+        title: "Индивидуальная разовая коуч-сессия",
+        forWho: "Для тех, у кого есть конкретный запрос или список вопросов, который можно решить быстро (за 1–2 встречи).",
+        details: [
+          {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
+          {label: "Длительность", value: "1 час"},
+          {label: "Количество", value: "1 встреча"},
+          {label: "Стоимость", value: "$120 (300 лари)"}
+        ]
+      },
+      {
+        title: "Индивидуальное сопровождение",
+        forWho: "Для тех, кто хочет глубоко и системно проработать большую цель или сложную ситуацию за несколько месяцев.",
+        details: [
+          {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
+          {label: "Длительность", value: "2 месяца (8 встреч)"},
+          {label: "Регулярность", value: "1 раз в неделю"},
+          {label: "Стоимость", value: "$800 (2100 лари)"}
+        ]
+      },
+      {
+        title: "Упаковка опыта в резюме для IT",
+        forWho: "Для IT-специалистов, которые отправляют резюме «в пустоту», не знают, как выгодно подать свой опыт и боятся, что «достижений недостаточно».",
+        details: [
+          {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
+          {label: "Длительность", value: "4 встречи (1 месяц)"},
+          {label: "Регулярность", value: "1 раз в неделю"},
+          {label: "Стоимость", value: "$450 (1200 лари)"}
+        ]
+      },
+      {
+        title: "Поддерживающий коучинг",
+        forWho: "Для тех, кто хочет лучше понимать себя, свои реакции и сценарии, и научиться уверенно принимать решения без жёстких дедлайнов.",
+        details: [
+          {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
+          {label: "Регулярность", value: "1 раз в неделю или в 2 недели"},
+          {label: "Стоимость", value: "$70 (180 лари) за встречу"}
+        ]
+      },
+      {
+        title: "Индивидуальная терапия",
+        forWho: "Для тех, кто сейчас в сложном эмоциональном состоянии: тревога, выгорание, кризис, сложно отпустить прошлое и двигаться дальше.",
+        details: [
+          {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
+          {label: "Регулярность", value: "1 раз в неделю"},
+          {label: "Минимальный курс", value: "от 12 встреч"},
+          {label: "Стоимость", value: "$40 (110 лари) за сессию"}
+        ]
+      },
+      {
+        title: "Диагностическая встреча",
+        forWho: "Для тех, кто пока не понимает, какой формат ему нужен и как лучше всего решить свой запрос.",
+        details: [
+          {label: "Формат", value: "Только онлайн"},
+          {label: "Длительность", value: "30 минут"},
+          {label: "Стоимость", value: "$30 (80 лари)"}
+        ],
+        note: "Стоимость вычитается из дальнейшей работы"
+      }
+    ];
+
+    const container = document.getElementById('services');
+
+    services.forEach(service => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      
+      card.innerHTML = `
+        <div class="card-header">
+          <div class="header-content">
+            <div class="card-title">${service.title}</div>
+            <div class="for-who">${service.forWho}</div>
+          </div>
+          <button class="toggle-btn">Развернуть</button>
+        </div>
+        <div class="card-body">
+          ${service.details.map(item => `
+            <div class="info-row">
+              <div class="label">${item.label}</div>
+              <div class="value">${item.value}</div>
+            </div>
+          `).join('')}
+          ${service.note ? `<p class="note">${service.note}</p>` : ''}
+		  
+		  ${service.title === "Диагностическая встреча" ?
+            `<p style="margin-top:16px; font-size:0.9rem; color:#666;">Стоимость вычитается из дальнейшей работы</p>` : ''}
+          
+          <button class="cta-btn" onclick="window.open('https://just-musha-way.com/diagnostic', '_blank')">
+            Записаться
+          </button>
+		  
+        </div>
+      `;
+
+      const toggleBtn = card.querySelector('.toggle-btn');
+
+      const toggleCard = () => {
+        const isExpanded = card.classList.contains('expanded');
+        
+        document.querySelectorAll('.card').forEach(c => {
+          c.classList.remove('expanded');
+          c.querySelector('.toggle-btn').textContent = 'Развернуть';
+        });
+
+        if (!isExpanded) {
+          card.classList.add('expanded');
+          toggleBtn.textContent = 'Свернуть';
+        }
+      };
+
+      card.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('toggle-btn')) toggleCard();
+      });
+
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleCard();
+      });
+
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
