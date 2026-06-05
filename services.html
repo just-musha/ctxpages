@@ -13,6 +13,10 @@
       --light: #FEFFFA;
     }
 
+    html {
+      scrollbar-gutter: stable;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -50,13 +54,15 @@
     }
 
     .card {
-      background: white;
+      background: var(--green);
       border-radius: 18px;
+      color: white;
       overflow: hidden;
       box-shadow: 0 4px 18px rgba(35, 64, 70, 0.1);
       transition: all 0.3s ease;
       cursor: pointer;
-      height: 100%;
+      height: auto;
+      height: fit-content;
     }
 
     .card:hover {
@@ -70,7 +76,7 @@
       color: white;
       display: flex;
       flex-direction: column;
-      min-height: 195px; /* увеличено, чтобы кнопка была ниже */
+      min-height: 150px; /* увеличено, чтобы кнопка была ниже */
     }
 
     .header-content {
@@ -91,6 +97,7 @@
       opacity: 0.9;
       line-height: 1.4;
       flex-grow: 1;
+      margin-bottom: 15px;
     }
 	
 	.cta-btn {
@@ -115,7 +122,8 @@
 
     .toggle-btn {
       margin-top: auto;
-      margin-bottom: 4px; /* дополнительный отступ снизу */
+      margin-bottom: 3px; /* нужный отступ от низа */
+      align-self: flex-start;
       background: rgba(255,255,255,0.25);
       color: white;
       border: none;
@@ -132,6 +140,7 @@
     }
 
     .card-body {
+      display: none;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease;
@@ -140,6 +149,7 @@
     }
 
     .card.expanded .card-body {
+      display: block;
       max-height: 480px;
       padding: 18px 20px 22px;
     }
@@ -172,7 +182,8 @@
       font-size: 0.8rem;
       color: #555;
       font-style: italic;
-	
+    }
+
   </style>
 </head>
 <body>
@@ -194,7 +205,7 @@
       },
       {
         title: "Индивидуальное сопровождение",
-        forWho: "Для тех, кто хочет глубоко и системно проработать большую цель или сложную ситуацию за несколько месяцев.",
+        forWho: "Для тех, кто хочет глубоко и системно проработать большую цель или сложную ситуацию.",
         details: [
           {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
           {label: "Длительность", value: "2 месяца (8 встреч)"},
@@ -214,7 +225,7 @@
       },
       {
         title: "Поддерживающий коучинг",
-        forWho: "Для тех, кто хочет лучше понимать себя, свои реакции и сценарии, и научиться уверенно принимать решения без жёстких дедлайнов.",
+        forWho: "Для тех, кто хочет лучше понимать себя, свои реакции и сценарии, и научиться уверенно принимать решения.",
         details: [
           {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
           {label: "Регулярность", value: "1 раз в неделю или в 2 недели"},
@@ -242,67 +253,76 @@
         note: "Стоимость вычитается из дальнейшей работы"
       }
     ];
+  const container = document.getElementById('services');
 
-    const container = document.getElementById('services');
+function closeAllCards() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.classList.remove('expanded');
+    const btn = card.querySelector('.toggle-btn');
+    if (btn) btn.textContent = 'Развернуть';
+  });
+}
 
-    services.forEach(service => {
-      const card = document.createElement('div');
-      card.className = 'card';
+function toggleCard(card, btn) {
+  const isExpanded = card.classList.contains('expanded');
+
+  closeAllCards();
+
+  if (!isExpanded) {
+    card.classList.add('expanded');
+    btn.textContent = 'Свернуть';
+  }
+}
+
+services.forEach(service => {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="header-content">
+        <div class="card-title">${service.title}</div>
+        <div class="for-who">${service.forWho}</div>
+      </div>
+      <button class="toggle-btn">Развернуть</button>
+    </div>
+
+    <div class="card-body">
+      ${service.details.map(item => `
+        <div class="info-row">
+          <div class="label">${item.label}</div>
+          <div class="value">${item.value}</div>
+        </div>
+      `).join('')}
+
+      ${service.note ? `<p class="note">${service.note}</p>` : ''}
       
-      card.innerHTML = `
-        <div class="card-header">
-          <div class="header-content">
-            <div class="card-title">${service.title}</div>
-            <div class="for-who">${service.forWho}</div>
-          </div>
-          <button class="toggle-btn">Развернуть</button>
-        </div>
-        <div class="card-body">
-          ${service.details.map(item => `
-            <div class="info-row">
-              <div class="label">${item.label}</div>
-              <div class="value">${item.value}</div>
-            </div>
-          `).join('')}
-          ${service.note ? `<p class="note">${service.note}</p>` : ''}
-		  
-		  ${service.title === "Диагностическая встреча" ?
-            `<p style="margin-top:16px; font-size:0.9rem; color:#666;">Стоимость вычитается из дальнейшей работы</p>` : ''}
-          
-          <button class="cta-btn" onclick="window.open('https://just-musha-way.com/diagnostic', '_blank')">
-            Записаться
-          </button>
-		  
-        </div>
-      `;
+      }
+      
+      <button class="cta-btn"
+        onclick="window.open('https://just-musha-way.com/diagnostic', '_blank')">
+        Записаться
+      </button>
+    </div>
+  `;
 
-      const toggleBtn = card.querySelector('.toggle-btn');
+  const toggleBtn = card.querySelector('.toggle-btn');
 
-      const toggleCard = () => {
-        const isExpanded = card.classList.contains('expanded');
-        
-        document.querySelectorAll('.card').forEach(c => {
-          c.classList.remove('expanded');
-          c.querySelector('.toggle-btn').textContent = 'Развернуть';
-        });
+  // клик по карточке (кроме кнопки)
+  card.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('toggle-btn')) {
+      toggleCard(card, toggleBtn);
+    }
+  });
 
-        if (!isExpanded) {
-          card.classList.add('expanded');
-          toggleBtn.textContent = 'Свернуть';
-        }
-      };
+  // клик по кнопке
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleCard(card, toggleBtn);
+  });
 
-      card.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('toggle-btn')) toggleCard();
-      });
-
-      toggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleCard();
-      });
-
-      container.appendChild(card);
-    });
+  container.appendChild(card);
+});
   </script>
 </body>
 </html>
