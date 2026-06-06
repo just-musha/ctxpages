@@ -41,6 +41,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
+      align-items: start;
     }
 
     @media (max-width: 480px) {
@@ -57,8 +58,9 @@
       box-shadow: 0 4px 18px rgba(35, 64, 70, 0.1);
       transition: all 0.3s ease;
       cursor: pointer;
+      display: flex; flex-direction: column;
       height: auto;
-      height: fit-content;
+      min-height: 320px;
     }
 
     .card:hover {
@@ -72,13 +74,23 @@
       color: white;
       display: flex;
       flex-direction: column;
-      min-height: 150px; /* увеличено, чтобы кнопка была ниже */
+      min-height: 300px; /* увеличено, чтобы кнопка была ниже */
+      flex-grow: 1;
+    }
+
+    .card-title,
+    .for-who,
+    .how-we-work {
+      flex-shrink: 0;              /* не сжимаются */
     }
 
     .header-content {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
+      justify-content: center;     /* ← Главное для вертикального центрирования */
+      gap: 12px;                   /* расстояние между элементами */
+      min-height: 160px;
     }
 
     .card-title {
@@ -97,16 +109,16 @@
       margin-bottom: 15px;
     }
 
-  .how-we-work {
-    margin-top: 3px;
-    margin-bottom: 15px;
-    padding: 10px 12px;
-    background: rgba(135, 103, 127, 0.5);
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    opacity: 0.85;
-  }
+    .how-we-work {
+      margin-top: 3px;
+      margin-bottom: 15px;
+      padding: 10px 12px;
+      background: rgba(135, 103, 127, 0.5);
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      opacity: 0.85;
+    }
 	
 	.cta-btn {
 	  margin-top: 5px;
@@ -163,7 +175,6 @@
     .card.expanded .card-body {
       display: block;
       max-height: 480px;
-      padding: 18px 20px 22px;
     }
 
     .info-row {
@@ -215,8 +226,8 @@
   <script>
     const services = [
       {
-        title: "Разовая коуч-сессия",
-        forWho: "Подходит, если у вас чёткий и локальный запрос (например, нужно разобраться с планом действий или страхом запуска проекта).",
+        title: "Индивидуальная разовая коуч-сессия",
+        forWho: "Подходит, если у вас чёткий и локальный запрос, либо список вопросов.",
         howWeWork: "Разберём вашу ситуацию и составим конкретные шаги дальше.",
         details: [
           {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
@@ -277,7 +288,7 @@
       {
 
         title: "Диагностическая встреча",
-        forWho: "Это первый шаг в работе.",
+        forWho: "Это первый шаг в работе. Разерем вашу ситуацию.",
         howWeWork: "Поймёте, какой формат вам подходит лучше всего, и как именно мы могли бы работать.",
         details: [
           {label: "Формат", value: "Только онлайн"},
