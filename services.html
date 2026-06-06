@@ -184,6 +184,11 @@
       max-height: 480px;
     }
 
+    .card.diagnostic .card-header,
+    .card.diagnostic .card-footer {
+      background: #54424f;
+    }
+
     .info-row {
       padding: 10px 0;
       border-bottom: 1px solid #f0f0f0;
@@ -233,8 +238,8 @@
   <script>
     const services = [
       {
-        title: "Разовая коуч-сессия",
-        forWho: "Подходит, если у вас чёткий и локальный запрос, либо список вопросов.",
+        title: "Разовая индивидуальная коуч-сессия",
+        forWho: "Подходит, если у вас чёткий и локальный запрос, либо список вопросов для разбора.",
         howWeWork: "Разберём вашу ситуацию и составим конкретные шаги дальше.",
         details: [
           {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
@@ -346,6 +351,10 @@ function highlightKeywords(text, keywords) {
 services.forEach(service => {
   const card = document.createElement('div');
   card.className = 'card';
+
+  if (service.title.includes("Диагностическая") || service.title.includes("Диагностика")) {
+    card.classList.add('diagnostic');
+  }
 
   card.innerHTML = `
     <div class="card-header">
