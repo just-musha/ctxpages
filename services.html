@@ -37,18 +37,25 @@
       margin: 0 auto;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      align-items: start;
-    }
-
-    @media (max-width: 480px) {
       .grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);   /* по умолчанию — 4 в ряд */
+        gap: 20px;
+        align-items: start;
       }
-    }
+
+      /* Адаптив */
+      @media (max-width: 900px) {
+        .grid { grid-template-columns: repeat(3, 1fr); }   /* 3 карточки */
+      }
+
+      @media (max-width: 740px) {
+        .grid { grid-template-columns: repeat(2, 1fr); }   /* 2 карточки */
+      }
+
+      @media (max-width: 500px) {
+        .grid { grid-template-columns: 1fr; }              /* 1 карточка */
+      }
 
     .card {
       background: var(--green);
@@ -60,7 +67,6 @@
       cursor: pointer;
       display: flex; flex-direction: column;
       height: auto;
-      min-height: 320px;
     }
 
     .card:hover {
@@ -74,7 +80,7 @@
       color: white;
       display: flex;
       flex-direction: column;
-      min-height: 300px; /* увеличено, чтобы кнопка была ниже */
+      min-height: 200px; /* увеличено, чтобы кнопка была ниже */
       flex-grow: 1;
     }
 
@@ -90,7 +96,7 @@
       flex-direction: column;
       justify-content: center;     /* ← Главное для вертикального центрирования */
       gap: 12px;                   /* расстояние между элементами */
-      min-height: 160px;
+      min-height: 100px;
     }
 
     .card-title {
@@ -102,7 +108,7 @@
 
     .for-who {
       margin-top: 5px;
-      font-size: 0.7rem;
+      font-size: clamp(0.78rem, 2.1vw, 0.92rem);
       opacity: 0.9;
       line-height: 1.4;
       flex-grow: 1;
@@ -115,7 +121,7 @@
       padding: 10px 12px;
       background: rgba(135, 103, 127, 0.5);
       border-radius: 10px;
-      font-size: 0.7rem;
+      font-size: clamp(0.74rem, 1.95vw, 0.84rem);
       font-weight: 500;
       opacity: 0.85;
     }
@@ -138,6 +144,7 @@
 	.cta-btn:hover {
 	  background: #8a8aa8;            /* Тёмный оттенок сиреневого */
 	  transform: translateY(-2px);
+    font-size: clamp(0.95rem, 2.3vw, 1.08rem);
 	}
 
     .toggle-btn {
@@ -149,7 +156,7 @@
       border: none;
       padding: 6px 18px;
       border-radius: 30px;
-      font-size: 0.82rem;
+      font-size: clamp(0.8rem, 2vw, 0.88rem);
       font-weight: 500;
       cursor: pointer;
       align-self: flex-start;
@@ -182,7 +189,7 @@
       border-bottom: 1px solid #f0f0f0;
       display: flex;
       justify-content: space-between;
-      font-size: 0.9rem;
+      font-size: clamp(0.74rem, 1.95vw, 0.84rem);
     }
 
     .info-row:last-child {
@@ -226,7 +233,7 @@
   <script>
     const services = [
       {
-        title: "Индивидуальная разовая коуч-сессия",
+        title: "Разовая коуч-сессия",
         forWho: "Подходит, если у вас чёткий и локальный запрос, либо список вопросов.",
         howWeWork: "Разберём вашу ситуацию и составим конкретные шаги дальше.",
         details: [
@@ -265,7 +272,7 @@
         title: "Поддерживающий коучинг",
         forWho: "Подходит, если вы уже проходите через изменения или хотите двигаться спокойно, без жёстких сроков.",
         howWeWork: "Помогу поддерживать ресурс, лучше понимать свои реакции и уверенно корректировать путь в вашем темпе.",
-        details: [
+        details: [ 
           {label: "Формат", value: "Онлайн / Оффлайн (Батуми)"},
           {label: "Регулярность", value: "1 раз в неделю или в 2 недели"},
           {label: "Минимальный курс", value: "от 8 встреч"},
@@ -396,3 +403,4 @@ services.forEach(service => {
   </script>
 </body>
 </html>
+>
